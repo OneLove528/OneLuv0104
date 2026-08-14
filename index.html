@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONE — Ultimate Control</title>
+  <style>
+    /* --------------------------------------------------
+       RESET & BASE STYLES (Apple Aesthetic System)
+    -------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #ffffff;
+      --surface-color: #fbfbfd;
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --text-subtle: #a1a1a6;
+      --border-light: rgba(0, 0, 0, 0.08);
+      --accent-black: #000000;
+      --nav-bg: rgba(255, 255, 255, 0.82);
+      --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      overflow-x: hidden;
+      line-height: 1.47059;
+      font-weight: 400;
+      letter-spacing: -0.022em;
+    }
+
+    /* --------------------------------------------------
+       NAVIGATION BAR
+    -------------------------------------------------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 52px;
+      z-index: 9999;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s var(--transition-smooth);
+    }
+
+    .nav-container {
+      width: 100%;
+      max-width: 1024px;
+      padding: 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo svg {
+      height: 18px;
+      width: auto;
+      display: block;
+      fill: var(--text-main);
+    }
+
+    .nav-status {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+
+    /* --------------------------------------------------
+       HERO SECTION (SECTION 1)
+    -------------------------------------------------- */
+    .hero-section {
+      min-height: 100vh;
+      padding-top: 120px;
+      padding-bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-size: 19px;
+      line-height: 1.21053;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--transition-smooth) 0.2s forwards;
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 8vw, 80px);
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      max-width: 900px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--transition-smooth) 0.4s forwards;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(21px, 3vw, 28px);
+      line-height: 1.14286;
+      font-weight: 400;
+      letter-spacing: 0.007em;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s var(--transition-smooth) 0.6s forwards;
+    }
+
+    /* Seamless Showcase Frame for the Controller */
+    .product-stage {
+      width: 100%;
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+      opacity: 0;
+      transform: scale(0.96) translateY(30px);
+      animation: scaleUp 1.2s var(--transition-smooth) 0.8s forwards;
+    }
+
+    .product-card {
+      background: #000000;
+      border-radius: 28px;
+      padding: 60px 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12), 0 10px 20px rgba(0, 0, 0, 0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-image {
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.8s var(--transition-smooth);
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.02);
+    }
+
+    /* --------------------------------------------------
+       SCROLL FEATURE SECTION (SECTION 2)
+    -------------------------------------------------- */
+    .features-section {
+      padding: 140px 22px;
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: var(--surface-color);
+      border-radius: 20px;
+      padding: 48px 36px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+    }
+
+    .feature-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .feature-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .feature-description {
+      font-size: 17px;
+      color: var(--text-muted);
+      line-height: 1.47059;
+    }
+
+    /* --------------------------------------------------
+       DYNAMIC REVEAL / COMING SOON SECTION (SECTION 3)
+    -------------------------------------------------- */
+    .reveal-section {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 22px;
+      background-color: var(--bg-color);
+      position: relative;
+    }
+
+    .logo-large {
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s var(--transition-smooth), transform 1s var(--transition-smooth);
+    }
+
+    .logo-large svg {
+      width: min(280px, 60vw);
+      height: auto;
+      fill: var(--text-main);
+    }
+
+    .coming-soon-title {
+      font-size: clamp(48px, 10vw, 110px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--text-main);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s var(--transition-smooth) 0.2s, transform 1s var(--transition-smooth) 0.2s;
+    }
+
+    .coming-soon-sub {
+      font-size: clamp(19px, 2.5vw, 24px);
+      color: var(--text-muted);
+      max-width: 500px;
+      margin-bottom: 48px;
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s var(--transition-smooth) 0.3s, transform 1s var(--transition-smooth) 0.3s;
+    }
+
+    .reveal-section.visible .logo-large,
+    .reveal-section.visible .coming-soon-title,
+    .reveal-section.visible .coming-soon-sub {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Minimalist CTA Input */
+    .subscribe-form {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 420px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s var(--transition-smooth) 0.4s, transform 1s var(--transition-smooth) 0.4s;
+    }
+
+    .reveal-section.visible .subscribe-form {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .input-field {
+      flex: 1;
+      height: 50px;
+      border-radius: 25px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      padding: 0 20px;
+      font-size: 15px;
+      outline: none;
+      background: var(--surface-color);
+      color: var(--text-main);
+      transition: border-color 0.3s ease;
+    }
+
+    .input-field:focus {
+      border-color: var(--text-main);
+    }
+
+    .submit-btn {
+      height: 50px;
+      padding: 0 28px;
+      border-radius: 25px;
+      border: none;
+      background: var(--text-main);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    /* --------------------------------------------------
+       FOOTER
+    -------------------------------------------------- */
+    .footer {
+      padding: 40px 22px;
+      border-top: 1px solid var(--border-light);
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-subtle);
+    }
+
+    /* --------------------------------------------------
+       KEYFRAME ANIMATIONS
+    -------------------------------------------------- */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleUp {
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding-top: 100px;
+      }
+      .product-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+      }
+      .subscribe-form {
+        flex-direction: column;
+      }
+      .submit-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <!-- ONE Vector Logo -->
+        <svg viewBox="0 0 450 120" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 20 20 H 90 A 20 20 0 0 1 110 40 V 80 A 20 20 0 0 1 90 100 H 20 A 20 20 0 0 1 0 80 V 40 A 20 20 0 0 1 20 20 Z" fill="none" stroke="currentColor" stroke-width="12"/>
+          <line x1="0" y1="88" x2="110" y2="88" stroke="currentColor" stroke-width="8"/>
+          <line x1="0" y1="98" x2="110" y2="98" stroke="currentColor" stroke-width="8"/>
+          <path d="M 160 100 V 20 L 230 100 V 20" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="270" y1="26" x2="330" y2="26" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+          <line x1="270" y1="60" x2="330" y2="60" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+          <line x1="270" y1="94" x2="330" y2="94" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+          <!-- Dotted Heart Pattern -->
+          <g fill="currentColor">
+            <circle cx="370" cy="40" r="4"/><circle cx="382" cy="40" r="4"/><circle cx="410" cy="40" r="4"/><circle cx="422" cy="40" r="4"/>
+            <circle cx="364" cy="52" r="4"/><circle cx="376" cy="52" r="4"/><circle cx="388" cy="52" r="4"/><circle cx="400" cy="52" r="4"/><circle cx="412" cy="52" r="4"/><circle cx="424" cy="52" r="4"/>
+            <circle cx="364" cy="64" r="4"/><circle cx="376" cy="64" r="4"/><circle cx="388" cy="64" r="4"/><circle cx="400" cy="64" r="4"/><circle cx="412" cy="64" r="4"/><circle cx="424" cy="64" r="4"/>
+            <circle cx="370" cy="76" r="4"/><circle cx="382" cy="76" r="4"/><circle cx="394" cy="76" r="4"/><circle cx="406" cy="76" r="4"/><circle cx="418" cy="76" r="4"/>
+            <circle cx="376" cy="88" r="4"/><circle cx="388" cy="88" r="4"/><circle cx="400" cy="88" r="4"/><circle cx="412" cy="88" r="4"/>
+            <circle cx="382" cy="100" r="4"/><circle cx="394" cy="100" r="4"/><circle cx="406" cy="100" r="4"/>
+            <circle cx="388" cy="112" r="4"/><circle cx="400" cy="112" r="4"/>
+            <circle cx="394" cy="124" r="4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="nav-status">Coming Soon</div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="hero-eyebrow">Introducing</div>
+    <h1 class="hero-title">Engineering Excellence.</h1>
+    <p class="hero-subtitle">Designed for absolute competitive precision.</p>
+
+    <div class="product-stage">
+      <div class="product-card">
+        <!-- REPLACE 'product.png' WITH YOUR ACTUAL PRODUCT IMAGE FILENAME -->
+        <img src="product.png" alt="ONE Arcade Controller" class="product-image" id="productImg">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES GRID -->
+  <section class="features-section">
+    <div class="grid">
+      <div class="feature-card">
+        <h3 class="feature-title">Monolithic Build</h3>
+        <p class="feature-description">Crafted from obsidian glass and reinforced alloy. Perfectly weighted for supreme stability under intense action.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">Zero-Latency Signal</h3>
+        <p class="feature-description">Custom micro-architectural controller board guarantees immediate, uncompromised response times.</p>
+      </div>
+      <div class="feature-card">
+        <h3 class="feature-title">Tactile Mastery</h3>
+        <p class="feature-description">Custom-tuned switches engineered specifically for flawless, high-speed execution.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DYNAMIC SWIPE REVEAL / COMING SOON -->
+  <section class="reveal-section" id="comingSoonSection">
+    <div class="logo-large">
+      <!-- High-resolution brand logo display -->
+      <svg viewBox="0 0 450 140" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 20 20 H 90 A 20 20 0 0 1 110 40 V 80 A 20 20 0 0 1 90 100 H 20 A 20 20 0 0 1 0 80 V 40 A 20 20 0 0 1 20 20 Z" fill="none" stroke="currentColor" stroke-width="12"/>
+        <line x1="0" y1="88" x2="110" y2="88" stroke="currentColor" stroke-width="8"/>
+        <line x1="0" y1="98" x2="110" y2="98" stroke="currentColor" stroke-width="8"/>
+        <path d="M 160 100 V 20 L 230 100 V 20" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="270" y1="26" x2="330" y2="26" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+        <line x1="270" y1="60" x2="330" y2="60" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+        <line x1="270" y1="94" x2="330" y2="94" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+        <g fill="currentColor">
+          <circle cx="370" cy="40" r="4"/><circle cx="382" cy="40" r="4"/><circle cx="410" cy="40" r="4"/><circle cx="422" cy="40" r="4"/>
+          <circle cx="364" cy="52" r="4"/><circle cx="376" cy="52" r="4"/><circle cx="388" cy="52" r="4"/><circle cx="400" cy="52" r="4"/><circle cx="412" cy="52" r="4"/><circle cx="424" cy="52" r="4"/>
+          <circle cx="364" cy="64" r="4"/><circle cx="376" cy="64" r="4"/><circle cx="388" cy="64" r="4"/><circle cx="400" cy="64" r="4"/><circle cx="412" cy="64" r="4"/><circle cx="424" cy="64" r="4"/>
+          <circle cx="370" cy="76" r="4"/><circle cx="382" cy="76" r="4"/><circle cx="394" cy="76" r="4"/><circle cx="406" cy="76" r="4"/><circle cx="418" cy="76" r="4"/>
+          <circle cx="376" cy="88" r="4"/><circle cx="388" cy="88" r="4"/><circle cx="400" cy="88" r="4"/><circle cx="412" cy="88" r="4"/>
+          <circle cx="382" cy="100" r="4"/><circle cx="394" cy="100" r="4"/><circle cx="406" cy="100" r="4"/>
+          <circle cx="388" cy="112" r="4"/><circle cx="400" cy="112" r="4"/>
+          <circle cx="394" cy="124" r="4"/>
+        </g>
+      </svg>
+    </div>
+
+    <h2 class="coming-soon-title">Coming Soon.</h2>
+    <p class="coming-soon-sub">Be the first to know when the initial drop is available.</p>
+
+    <form class="subscribe-form" onsubmit="event.preventDefault(); alert('You will be notified upon drop.');">
+      <input type="email" placeholder="Enter your email" class="input-field" required>
+      <button type="submit" class="submit-btn">Notify Me</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Copyright &copy; 2026 ONE Inc. All rights reserved.</p>
+  </footer>
+
+  <!-- DYNAMIC INTERACTION SCRIPT -->
+  <script>
+    // Smooth scroll reveal observer
+    const observerOptions = {
+      root: null,
+      threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe feature elements & reveal section
+    document.querySelectorAll('.feature-card').forEach(card => observer.observe(card));
+    observer.observe(document.getElementById('comingSoonSection'));
+  </script>
+</body>
+</html>
