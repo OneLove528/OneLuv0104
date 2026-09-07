@@ -1,40 +1,260 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ONE — Pre-Register</title>
-<meta name="description" content="Pre-register for the OneLove ONE arcade stick.">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ONE — Pre-Register</title>
+  <meta name="description" content="Pre-register for the OneLove ONE arcade stick.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
-  :root{
-    --black:#000;
-    --white:#fff;
-    --ink:#1d1d1f;
-    --muted:#6e6e73;
-    --line:rgba(29,29,31,.12);
-    --surface:#f5f5f7;
-    --ease:cubic-bezier(.16,.84,.44,1);
-  }
+    :root {
+      --black: #000;
+      --white: #fff;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(29,29,31,.12);
+      --surface: #f5f5f7;
+      --ease: cubic-bezier(.16,.84,.44,1);
+    }
 
-  *{box-sizing:border-box}
-  html{min-height:100%;background:var(--surface)}
-  body{
-    margin:0;
-    min-height:100svh;
-    background:var(--surface);
-    color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-  a{color:inherit;text-decoration:none}
-  button,input{font:inherit}
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--surface); }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
 
-  .nav{
-    position:fixed;
-    inset:0 0 auto;
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      height: 64px;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245,245,247,.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav__brand {
+      display: block;
+      width: 78px;
+      height: 16px;
+      position: relative;
+      flex: none;
+    }
+    .nav__brand img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    .nav__back {
+      font-size: 12px;
+      letter-spacing: .02em;
+      opacity: .82;
+      transition: opacity .2s var(--ease);
+    }
+    .nav__back:hover { opacity: .42; }
+
+    .register {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 104px 24px 72px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .register::before {
+      content: "";
+      position: absolute;
+      width: min(760px, 90vw);
+      height: min(760px, 90vw);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.95) 0%, rgba(255,255,255,.48) 38%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .register__content {
+      width: min(100%, 500px);
+      text-align: center;
+    }
+
+    .register__kicker {
+      margin: 0 0 18px;
+      font-family: 'Play', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .register__title {
+      margin: 0;
+      font-size: clamp(50px, 8vw, 82px);
+      font-weight: 650;
+      line-height: .94;
+      letter-spacing: -.055em;
+    }
+
+    .register__copy {
+      max-width: 430px;
+      margin: 18px auto 38px;
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: -.01em;
+      color: var(--muted);
+    }
+
+    .register__form {
+      width: 100%;
+      text-align: left;
+    }
+
+    .field { margin: 0 0 14px; }
+
+    .field label {
+      display: block;
+      margin: 0 0 7px 2px;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: .01em;
+    }
+
+    .field input {
+      display: block;
+      width: 100%;
+      height: 54px;
+      padding: 0 17px;
+      border: 1px solid rgba(29,29,31,.17);
+      border-radius: 13px;
+      background: rgba(255,255,255,.9);
+      color: var(--ink);
+      font-size: 16px;
+      outline: none;
+      box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+      transition: border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+    }
+
+    .field input::placeholder { color: #9a9a9f; }
+
+    .field input:hover { border-color: rgba(29,29,31,.28); }
+    .field input:focus {
+      background: #fff;
+      border-color: var(--ink);
+      box-shadow: 0 0 0 4px rgba(29,29,31,.06);
+    }
+
+    .register__button {
+      display: flex;
+      width: 100%;
+      min-height: 54px;
+      margin-top: 8px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: .01em;
+      cursor: pointer;
+      transition: transform .2s var(--ease), opacity .2s var(--ease);
+    }
+
+    .register__button:hover { transform: translateY(-2px); opacity: .88; }
+    .register__button:active { transform: translateY(0); }
+    .register__button:disabled { opacity: .45; cursor: wait; transform: none; }
+    .register__button:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+    .message {
+      min-height: 20px;
+      margin: 17px 0 0;
+      font-size: 13px;
+      line-height: 1.45;
+      text-align: center;
+    }
+    .message.success { color: #176b35; }
+    .message.error { color: #a52222; }
+
+    .register__note {
+      margin: 22px 0 0;
+      font-size: 10px;
+      line-height: 1.5;
+      text-align: center;
+      color: #8a8a8f;
+    }
+
+    @media(max-width: 620px) {
+      .nav { padding: 0 20px; }
+      .register { padding: 96px 20px 56px; }
+      .register__title { font-size: clamp(46px, 14vw, 68px); }
+      .register__copy { margin-bottom: 30px; }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      .nav__back, .register__button, .field input { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Primary navigation">
+    <a href="/" class="nav__brand" aria-label="ONE — home">
+      <!-- REPLACE 'YOUR_IMAGE_LINK_OR_BASE64_HERE' with your actual logo URL or base64 code -->
+      <img src="YOUR_IMAGE_LINK_OR_BASE64_HERE" alt="OneLove Logo" />
+    </a>
+  </nav>
+
+  <!-- Main Registration Area -->
+  <main class="register">
+    <div class="register__content">
+      <p class="register__kicker">OneLove</p>
+      <h1 class="register__title">ONE</h1>
+      <p class="register__copy">Pre-register for the OneLove ONE arcade stick.</p>
+      
+      <!-- Registration Form -->
+      <form class="register__form" action="#" method="POST">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <button type="submit" class="register__button">Pre-Register Now</button>
+      </form>
+      
+      <!-- Success/Error Message Container -->
+      <div class="message"></div>
+      
+      <p class="register__note">By pre-registering, you will be the first to know when the ONE drops.</p>
+    </div>
+  </main>
+
+</body>
+</html>    inset:0 0 auto;
     z-index:20;
     height:64px;
     padding:0 28px;
